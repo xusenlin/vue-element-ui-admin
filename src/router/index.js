@@ -20,7 +20,7 @@ let RouteList = [
         name: 'Dashboard',
         meta: {
           title: '首页',
-          keepAlive: false
+          keepAlive: true
         },
         component: resolve => require(['@/views/home/Index.vue'], resolve),
       },
