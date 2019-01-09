@@ -25,22 +25,23 @@
     components: {
       ScrollPane
     },
-    watch: {
-      '$route': {
-        handler: function () {
-          let index = this.$Func.hasValInArrayObj(this.nav, 'path', this.$route.path);
-          if (index != -1) return;
-          this.nav.push({
-            path: this.$route.path,
-            title: this.$route.meta.title,
-          });
-
-        },
-        // 深度观察
-        deep: true
-      }
+    created() {
+      this.$router.afterEach(this.afterEachHandler)
     },
     methods: {
+      afterEachHandler(to, from) {
+        //判断当前标签是否需要保持，如果不，则关闭本标签
+        if (!from.meta.keepAlive) {
+          this.nav = this.nav.filter(item => item.path !== from.path);
+        }
+        //判断当前是否存在即将跳转的标签，如果不存在，则创建
+        if (!this.nav.some(item => item.path === to.path)) {
+          this.nav.push({
+            path: to.path,
+            title: to.meta.title
+          });
+        }
+      },
       closeSelectedTag(i) {
         let nav = this.nav;
         let thisPath = nav[i].path;
