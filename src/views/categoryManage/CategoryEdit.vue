@@ -82,7 +82,7 @@
         }
     }
 </script>
-<style lang="less">
+<style lang="scss">
     .category-dialog{
         .el-cascader{
             width: 100%;

@@ -80,7 +80,7 @@
     }
   }
 </script>
-<style lang="less">
+<style lang="scss">
   .box-card {
     border-radius: 0;
     .panel-heading{

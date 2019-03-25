@@ -1,52 +1,88 @@
-import ElementUI from 'element-ui';
-import Axios from 'axios';
-import Config from '../config/';
+import Axios from 'axios'
+import Config from '../config/app.js'
+import { Notification,Loading  } from 'element-ui';
+import {getToken,removeToken} from '../utils/dataStorage.js'
 
-function buildApiUrl(url) {
-  return `${Config.apiUrl}/${Config.apiPrefix}/${url}`;
-}
+const service = Axios.create({
+    baseURL: Config.apiUrl + '/' + Config.apiPrefix,
+    headers: {
+        'Accept': '*/*'
+    },
+    timeout: Config.timeout
+})
+service.defaults.retry = Config.requestRetry;
+service.defaults.retryDelay = Config.requestRetryDelay;
 
-function setToken() {
-  Axios.defaults.headers['Authorization'] = sessionStorage.getItem(Config.tokenKey);
-}
+service.interceptors.request.use(
+    config => {
 
-function isFunction(fn) {
-  return Object.prototype.toString.call(fn) === '[object Function]';
-}
+        if(!config.closeLoading){
+            window.loadingInstance = Loading.service();
+        }
 
-function buildServerApiRequest(params, url, type, callback) {
-  setToken();
-  if ('get' == type) {
-	  params={params:params}
-    //做一些加载的小动画挺好
-  }
-  let apiUrl = buildApiUrl(url);
-  let result = Axios[type](apiUrl, params);
+        let noParameters = config.url.indexOf('?')  == -1;
+        //config.headers['X-Token'] = getToken() //
+        config.url = noParameters ? config.url+'?access_token=' + getToken(): config.url+'&access_token='+ getToken();
 
-  if (isFunction(callback)) {//没有回调则返回es6 promise
-    result.then(r => {
-		r = r.data;
-      //这里可以根据后台数据进一步做一些过滤或者报错之类的
-      callback(r);
-    }).catch(e => {
-      if(process.env.NODE_ENV=='development')
-        console.log(e);
-      ElementUI.Notification.error({
-        title: '请求错误',
-        message: 'Network Error'
-      });
-    });
-  }
-  return result;
-}
+        return config
+    },
+    error => {
+        Promise.reject(error)
+    }
+)
 
 
-export function buildApiRequest(params, url, type, callback) {
-  return buildServerApiRequest(params, url, type, callback);
-}
 
-export function getApiUrl(url) {
-  //只是返回api地址而不做请求，用在上传组件之类的
-  return buildApiUrl(url) + '?token=' + sessionStorage.getItem(Config.tokenKey);
-}
+service.interceptors.response.use(
+    response => {//Grade
 
+        if(!response.config.closeLoading){
+            setTimeout(_=>{
+                window.loadingInstance.close();
+            },400);
+        }
+
+        const res = response
+        if (res.status !== 200) {
+            Notification({
+                title:'数据返回出错',
+                message:"请稍后重试",
+                type:'warning'
+            });
+            //return Promise.reject('error')
+        } else {
+            if((response.config).hasOwnProperty('closeInterceptors') && response.config.closeInterceptors){
+                return res.data
+            }
+
+            if(res.data.resultCode != 200){
+                Notification({
+                    title:res.data.message,
+                    type:'warning'
+                });
+                if(res.data.resultCode == 402){//登录状态失效
+                    removeToken();
+                    setTimeout(_=>{
+                        window.location.href = './login.html';
+                    },2000)
+                }
+                return Promise.reject('error');
+            }
+            return res.data.data
+        }
+    },
+    error => {
+        console.log(error)
+        setTimeout(_=>{
+            window.loadingInstance.close();
+        },300)
+        Notification({
+            title:"请求未响应",
+            message:"服务器可能出了点问题",
+            type:'warning'
+        });
+        return Promise.reject(error)//千万不能去掉，，，否则请求超时会进入到then方法，导致逻辑错误。
+    }
+)
+
+export default service

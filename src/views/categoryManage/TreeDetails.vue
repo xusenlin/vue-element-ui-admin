@@ -63,7 +63,7 @@
     }
   }
 </script>
-<style lang="less">
+<style lang="scss">
   .tree-details{
     flex: 1;
     .el-button.is-circle {

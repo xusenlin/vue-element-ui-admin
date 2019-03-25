@@ -1,7 +1,17 @@
-import {buildApiRequest as A,getApiUrl as G} from '../utils/request'
+import request from '../utils/request.js'
 
-export default {
-    login: (p,c) => A(p,'user/login','post',c),
+export function login(params) {
+  return request({
+    url: '/pc/user/login',
+    method: 'post',
+    data: params
+  })
 }
 
-
+export function sendSMS(params) {
+  return request({
+    url: '/pc/sendsms',
+    method: 'get',
+    params: params
+  })
+}

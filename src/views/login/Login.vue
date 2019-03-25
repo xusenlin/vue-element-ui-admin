@@ -39,6 +39,9 @@
 </template>
 
 <script>
+  import {setToken} from '../../utils/dataStorage'
+  import {login as loginApi} from '../../api/user'
+
   export default {
     data() {
       return {
@@ -50,23 +53,23 @@
     },
     methods: {
       login() {
-        let APP = this;
-        APP.loginLoading = true;
+        this.loginLoading = true;
+        //loginApi({userNmae:this.userNmae,password:this.password}).then(r=>{}).catch(_=>{})
         setTimeout(() => {
-          sessionStorage.setItem(APP.$Config.tokenKey, '123456789');
-          APP.$notify({
+          setToken('123456789');
+          this.$notify({
             title: '登录成功',
             message: '很高兴你使用ElementUIAdmin！别忘了给个Star哦。',
             type: 'success'
           });
-          APP.loginLoading = false;
-          APP.$router.push({path: '/'});
+          this.loginLoading = false;
+          this.$router.push({path: '/'});
         }, 1000);
       }
     }
   }
 </script>
 
-<style lang="less">
-  @import "Login.less";
+<style lang="scss">
+  @import "Login.scss";
 </style>

@@ -11,7 +11,7 @@
   }
 </script>
 
-<style lang="less">
+<style lang="scss">
   #app {
     background-color: #222d32;
   }

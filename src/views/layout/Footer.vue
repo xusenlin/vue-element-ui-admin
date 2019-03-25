@@ -16,7 +16,7 @@
     methods: {}
   }
 </script>
-<style lang="less">
+<style lang="scss">
   .footer {
     width: 100%;
     font-size: 14px;

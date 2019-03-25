@@ -160,7 +160,7 @@
     components: {}
   }
 </script>
-<style lang="less">
+<style lang="scss">
   .permissions-dialog {
 
   }

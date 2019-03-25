@@ -346,7 +346,7 @@
     }
   }
 </script>
-<style lang="less">
+<style lang="scss">
   .demo{
     margin: 10px;
     .grid-content {

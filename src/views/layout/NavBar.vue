@@ -30,10 +30,11 @@
     },
     methods: {
       afterEachHandler(to, from) {
-        //判断当前标签是否需要保持，如果不，则关闭本标签
-        if (!from.meta.keepAlive) {
-          this.nav = this.nav.filter(item => item.path !== from.path);
-        }
+        // //判断当前标签是否需要保持，如果不，则关闭本标签
+        //keepAlive用来缓存页面的。
+        // if (!from.meta.keepAlive) {
+        //   this.nav = this.nav.filter(item => item.path !== from.path);
+        // }
         //判断当前是否存在即将跳转的标签，如果不存在，则创建
         if (!this.nav.some(item => item.path === to.path)) {
           this.nav.push({
@@ -60,7 +61,8 @@
     }
   }
 </script>
-<style lang="less" scoped="">
+<style lang="scss" scoped="">
+  @import "../../assets/css/variables.scss";
   .nav-bar {
     margin-top: 50px;
     height: 38px;
@@ -109,8 +111,8 @@
       }
     }
     .active {
-      border: 1px solid #3d8dbc;
-      background: #3d8dbc;
+      border: 1px solid $--color-primary;
+      background: $--color-primary;
       color: #fff;
       .point {
         display: inline-block;

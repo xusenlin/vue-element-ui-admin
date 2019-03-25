@@ -60,7 +60,7 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
   .scroll-container {
     cursor: ew-resize;
     white-space: nowrap;

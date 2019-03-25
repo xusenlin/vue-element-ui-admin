@@ -183,7 +183,7 @@
     }
   }
 </script>
-<style lang="less">
+<style lang="scss">
   .category{
     .el-tree-node__content {
       height: 40px;

@@ -64,6 +64,7 @@
 <script>
   import ToolBar from '@/components/ToolBar.vue';
   import HelpHint from '@/components/HelpHint.vue';
+
   export default {
     data() {
       return {

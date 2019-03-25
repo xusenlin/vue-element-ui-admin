@@ -232,8 +232,8 @@
     },
   }
 </script>
-<style lang="less">
-
+<style lang="scss">
+  @import "../../assets/css/variables.scss";
   .sidebar-hidden {
     .header {
       .logo {
@@ -301,13 +301,14 @@
       transition: all 0.3s ease-in-out;
       .menu{
         overflow-y: auto;
-        height: calc(~'100vh - 100px');
+        height: calc(100vh - 100px);
       }
       .sidebar-toggle{
         position: relative;
         width: 100%;
         height: 50px;
-        background-color: #367fa9;
+
+        background-color: mix(#000,$--color-primary,10%);;
         color: #fff;
         cursor: pointer;
         .icon-left{
@@ -331,7 +332,7 @@
     .main-container {
       //margin-top: 50px;
       padding: 6px;
-      min-height: calc(~'100vh - 101px');
+      min-height: calc(100vh - 101px);
     }
   }
 
@@ -340,7 +341,7 @@
     position: fixed;
     display: flex;
     height: 50px;
-    background-color: #3c8dbc;
+    background-color: $--color-primary;
     z-index: 10;
     .logo {
       .min {
@@ -349,9 +350,10 @@
       width: 230px;
       height: 50px;
       text-align: center;
+      overflow: hidden;
       line-height: 50px;
       color: #fff;
-      background-color: #367fa9;
+      background-color: mix(#000,$--color-primary,10%);
       -webkit-transition: width 0.35s;
       transition: all 0.3s ease-in-out;
     }
@@ -382,7 +384,7 @@
       padding: 0 14px;
       color: #fff;
       &:hover {
-        background-color: #367fa9
+        background-color: mix(#000,$--color-primary,10%);
       }
     }
 
