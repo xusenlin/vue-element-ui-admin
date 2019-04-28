@@ -9,6 +9,7 @@ import {isLogin} from './utils/dataStorage'
 import App from './App.vue'
 
 Vue.prototype.$Config = Config;
+
 Vue.use(ElementUI)
 
 router.beforeEach((to, from, next) => {
