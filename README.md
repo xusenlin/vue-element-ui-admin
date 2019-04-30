@@ -38,7 +38,7 @@ npm run build
 	|       |-- app.js                   // 应用的配置，名字，api请求的url，版本号等。在main.js挂载全部配置到vue原型上，Vue.prototype.$Config = Config
 	|       |-- localKey.js              // 性别对应的key、应用的名字、文章的状态等，可以具体到某个页面的配置，统一管理。
 	|       |-- xxx.js                   // 其他配置文件，建议分类清楚，如post.js用于文章相关配置
-	|   |-- utils                        // 工具函数。和config,api一个道理，建议分类清楚。
+	|   |-- utils                        // 工具函数和工具命令行之类的。
 	|   |-- menu                         // 后台菜单配置，包括使用的图标等，里面也可以做权限控制
 	|   |-- router                       // vue-route,当项目比较大，路由较多也建议分为多个文件，里面有例子。
 	|   |-- store                        // vuex,数据仓库,model之类的
