@@ -21,6 +21,9 @@ npm run build
 
 *一个大型单页应用离不开合理的项目结构和一些简单的封装*
 
+配套的命令行工具Element UI Admin Cli在utils目录下
+
+https://github.com/xusenlin/ElementUIAdminTool
 
 ## 目录结构介绍 ##
 
