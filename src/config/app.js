@@ -20,6 +20,7 @@ export default {
   requestRetryDelay: 800,
   tokenKey: 'ACCESS_TOKEN',
   userInfoKey: 'USER_INFO',
+  permissionsKey:'PERMISSION_ARRAY',
   gitHub: 'https://github.com/xusenlin/ElementUIAdmin2',
   ...localKey
 }

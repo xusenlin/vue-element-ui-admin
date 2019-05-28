@@ -32,3 +32,13 @@ export function removeToken() {
 export function isLogin() {
     return (getToken() || '').length >5
 }
+
+
+export function setPermissions(permissionsArr){
+    Storage.set(Config.permissionsKey,permissionsArr)
+    return permissionsArr
+}
+export function hasPermissions(permissionsKey){
+    let permissionsArr = Storage.get(Config.permissionsKey,[])
+    return permissionsArr.indexOf(permissionsKey) != -1
+}

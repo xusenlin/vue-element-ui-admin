@@ -11,7 +11,55 @@ export function currentUrlToParams(key = null) {
     return paramsData;
 }
 
-export function clone(obj) {
-    let strData = JSON.stringify(obj)
-    return JSON.parse(strData);
+/**
+ * 重置对象参数
+ * @params -> Object
+ * @arg = Array => []
+ * @arg = Boolean => false
+ * @arg = Number => null
+ * @arg = String => ''
+ * */
+export function resetArgs(obj,def = null) {
+    for (let [key, value] of Object.entries(obj)) {
+        if (Array.isArray(value)) {
+            if(def && def.hasOwnProperty(key)){
+                Reflect.set(obj, key, def[key])
+            }else {
+                Reflect.set(obj, key, [])
+            }
+        } else if (typeof value == 'string') {
+            if(def && def.hasOwnProperty(key)){
+                Reflect.set(obj, key, def[key])
+            }else {
+                Reflect.set(obj, key, '')
+            }
+        } else if (typeof value == 'number') {
+            if(def && def.hasOwnProperty(key)){
+                Reflect.set(obj, key, def[key])
+            }else {
+                Reflect.set(obj, key, null)
+            }
+        } else if (typeof value == 'boolean') {
+            if(def && def.hasOwnProperty(key)){
+                Reflect.set(obj, key, def[key])
+            }else {
+                Reflect.set(obj, key, false)
+            }
+        }
+    }
 }
+
+/**
+ *
+ * @param obj
+ * @param row
+ */
+export function fillerLeft(obj,row = {}) {
+    for (let key in obj) {
+        if(row.hasOwnProperty(key)){
+            obj[key] = row[key]
+        }
+    }
+}
+
+
