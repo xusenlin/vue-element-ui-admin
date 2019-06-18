@@ -1,13 +1,13 @@
 <template>
     <div class="pagination">
         <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="pageParams.page"
-                :page-sizes="pageSizes"
-                :page-size="pageParams.pageSize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="total">
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pageParams.page"
+            :page-sizes="pageSizes"
+            :page-size="pageParams.pageSize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
         </el-pagination>
     </div>
 </template>
@@ -22,6 +22,12 @@
         name: "Pagination",
         props: {
             requestFunc: Function,
+            filterParams:{
+                type:Function,
+                default:p=>{
+                    return p
+                },
+            },
             params: Object,
         },
         data: () => {
@@ -30,7 +36,7 @@
                 pageSizes: pageSizesArr,
                 pageParams: {
                     pageSize: pageSizesArr[0],
-                    page: 1
+                    pageNum: 1
                 }
             }
         },
@@ -41,17 +47,16 @@
                 //console.log(`每页 ${val} 条`);
             },
             handleCurrentChange(val) {
-                this.pageParams.page = val;
+                this.pageParams.pageNum = val;
                 this.getPageData();
                 //console.log(`当前页: ${val}`);
             },
             getPageData() {
-
-                this.requestFunc({...this.params, ...this.pageParams}).then(r => {
-                    this.total = G(r, 'total', 0);
+                let p = this.filterParams({...this.params, ...this.pageParams});
+                this.requestFunc(p).then(r => {
+                    this.total = parseInt(G(r, 'total', 0));
                     this.$emit('returnData', r);//this.$emit('returnData', G(r,'list',[]));
-                }).catch(_ => {
-                })
+                }).catch(_ => {})
             },
             Refresh() {
                 this.getPageData();

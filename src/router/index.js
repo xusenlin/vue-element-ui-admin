@@ -88,7 +88,7 @@ let RouteList = [
         component: resolve => require(['@/views/permissionManage/permission/Index.vue'], resolve),
       },
       //个人中心，可能有修改密码，头像修改等路由
-      Personal.index,
+      Personal
     ]
   },
   {

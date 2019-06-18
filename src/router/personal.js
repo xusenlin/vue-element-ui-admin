@@ -1,5 +1,4 @@
 export default {
-  index:{
     path: '/personal',
     name: 'Personal',
     meta: {
@@ -7,5 +6,4 @@ export default {
       keepAlive: true
     },
     component: resolve => require(['@/views/personal/Index.vue'], resolve),
-  }
 }
