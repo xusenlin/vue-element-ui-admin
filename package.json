@@ -9,7 +9,7 @@
     "build:test": "vue-cli-service build --mode test"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "element-ui": "^2.5.4",
     "good-storage": "^1.1.0",
     "lodash": "^4.17.11",
