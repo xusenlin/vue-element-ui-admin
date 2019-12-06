@@ -1,28 +1,5 @@
 import localKey from './localKey'
-
-
-const devApiUrl = 'http://192.168.1.92:9088';//本地开发环境
-const buildDevApiUrl = 'http://192.168.1.92:9088';//打包开发环境
-const buildTestApiUrl = 'http://192.168.1.92:6906';//打包测试环境
-const buildProApiUrl = 'http://192.168.1.92:9088';//打包正式环境
-
-
-let useApiUrl;
-
-switch (process.env.NODE_ENV) {
-  case 'development':
-    useApiUrl = devApiUrl;
-    break;
-  case 'buildDev':
-    useApiUrl = buildDevApiUrl;
-    break;
-  case 'buildTest':
-    useApiUrl = buildTestApiUrl;
-    break;
-  case 'production':
-    useApiUrl = buildProApiUrl;
-    break;
-}
+import {useApiUrl} from './url'
 
 export default {
   nodeDevEnv: process.env.NODE_ENV == 'development',
