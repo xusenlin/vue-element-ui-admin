@@ -1,77 +1,90 @@
 <template>
-    <div class="pagination">
-        <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="pageParams.page"
-            :page-sizes="pageSizes"
-            :page-size="pageParams.pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="total">
-        </el-pagination>
-    </div>
+  <div class="pagination">
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pageParams.pageNum"
+      :page-sizes="pageSizes"
+      :page-size="pageParams.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    >
+    </el-pagination>
+  </div>
 </template>
 
 <script>
-    //如果需要保存分页信息和搜索数据可以在组件销毁之前用页面关键key保存在本地
-    //也可以使用 keep-alive保存页面
-    import G from 'lodash/get'
-
-    const pageSizesArr = [8, 16, 32];
-    export default {
-        name: "Pagination",
-        props: {
-            requestFunc: Function,
-            filterParams:{
-                type:Function,
-                default:p=>{
-                    return p
-                },
-            },
-            params: Object,
-        },
-        data: () => {
-            return {
-                total: 0,
-                pageSizes: pageSizesArr,
-                pageParams: {
-                    pageSize: pageSizesArr[0],
-                    pageNum: 1
-                }
-            }
-        },
-        methods: {
-            handleSizeChange(val) {
-                this.pageParams.pageSize = val;
-                this.getPageData();
-                //console.log(`每页 ${val} 条`);
-            },
-            handleCurrentChange(val) {
-                this.pageParams.pageNum = val;
-                this.getPageData();
-                //console.log(`当前页: ${val}`);
-            },
-            getPageData() {
-                let p = this.filterParams({...this.params, ...this.pageParams});
-                this.requestFunc(p).then(r => {
-                    this.total = parseInt(G(r, 'total', 0));
-                    this.$emit('returnData', r);//this.$emit('returnData', G(r,'list',[]));
-                }).catch(_ => {})
-            },
-            Refresh() {
-                this.getPageData();
-            },
-        },
-        mounted: function () {
-            this.getPageData();
-        },
+import Config from "@/config/app.js";
+export default {
+  name: "Pagination",
+  props: {
+    requestFunc: [Function, Boolean],
+    filterParams: {
+      type: Function,
+      default: p => {
+        return p;
+      }
+    },
+    params: Object,
+    paginationField: {
+      type: String,
+      default: ""
     }
+  },
+  data: () => {
+    return {
+      total: 0,
+      pageSizes: Config.pageSizesArr,
+      pageParams: {
+        pageSize: Config.pageSizesArr[0],
+        pageNum: 1
+      }
+    };
+  },
+  methods: {
+    handleSizeChange(val) {
+      this.pageParams.pageSize = val;
+      this.getPageData();
+    },
+    handleCurrentChange(val) {
+      this.pageParams.pageNum = val;
+      this.getPageData();
+    },
+    getPageData() {
+      if (!this.requestFunc) {
+        this.$emit("returnData", []);
+        return;
+      }
+      let p = this.filterParams({ ...this.params, ...this.pageParams });
+      this.requestFunc(p)
+        .then(result => {
+          let r = result;
+          if (this.paginationField) {
+            r = result[this.paginationField];
+          }
+          this.total = parseInt(r.total);
+          this.$emit("returnData", result);
+        })
+        .catch(() => {});
+    },
+    Refresh() {
+      this.pageParams.pageNum = 1;
+      this.getPageData();
+    },
+    GetAllParam() {
+      return { ...this.params, ...this.pageParams };
+    }
+  },
+  mounted: function() {
+    this.getPageData();
+  }
+};
 </script>
 
 <style scoped>
-    .pagination {
-        padding: 10px;
-        display: flex;
-        background: #fff;
-    }
+.pagination {
+  padding: 10px;
+  display: flex;
+  background: #fff;
+}
 </style>

@@ -1,34 +1,31 @@
-import Vue from 'vue'
-import store from './store/'
-import ElementUI from 'element-ui'
-import './assets/css/style.scss'
-import router from './router/'
-import Config from './config/app'
-import {isLogin} from './utils/dataStorage'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
+import elementUi from "element-ui";
+import Config from "@/config/app";
+import "@/assets/css/style.scss";
+import router from "./router";
+import store from "./store";
+import "@/utils/v-auth.js";
+import { getToken } from "@/utils/common";
+import "./components";
 
-
-Vue.prototype.$Config = Config;
-
-Vue.use(ElementUI)
+Vue.config.productionTip = false;
+Vue.prototype.GlobalCfg = Config;
+Vue.use(elementUi);
 
 router.beforeEach((to, from, next) => {
-  window.document.title = to.meta.title ? to.meta.title + '-' + Config.siteName : Config.siteName;
-
-  if (!isLogin() && to.path != '/login') {
-    next({path: '/login'});
+  window.document.title = to.meta.title
+    ? to.meta.title + "-" + Config.siteName
+    : Config.siteName;
+  if (!getToken() && to.path !== "/login") {
+    next({ path: "/login" });
   } else {
     next();
   }
 });
-router.afterEach(transition => {
-
-});
-
 
 new Vue({
-  el: '#app',
   router,
   store,
   render: h => h(App)
-})
+}).$mount("#app");

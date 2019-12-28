@@ -1,5 +1,18 @@
-import Menu from './menu';
+import articleManage from "./articleManage.js";
 
-//这里可以根据权限做菜单过滤
+/**
+ * 首页
+ * @type {{name: string, path: string, icon: string}}
+ */
+let home = {
+  name: "首页",
+  path: "/",
+  permissionsKey: "",
+  icon: "fa fa-tachometer"
+};
 
-export default  Menu;
+export default {
+  home,
+  articleManage
+  //helpCenter
+};

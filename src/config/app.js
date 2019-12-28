@@ -1,19 +1,11 @@
-import localKey from './localKey'
-import {useApiUrl} from './url'
+import { useApiUrl } from "@/config/apiUrl";
+import CommonConfig from "@/config/common";
+import SystemConfig from "@/config/system";
 
 export default {
-  nodeDevEnv: process.env.NODE_ENV == 'development',
+  ...CommonConfig,
+  ...SystemConfig,
   apiUrl: useApiUrl,
-  siteName: 'Element UI Admin模板',
-  minSiteMame: 'EUI',
-  apiPrefix: "",
-  timeout: 5000,
-  cookiesExpires: 7,
-  requestRetry: 4,
-  requestRetryDelay: 800,
-  tokenKey: 'ACCESS_TOKEN',
-  userInfoKey: 'USER_INFO',
-  permissionsKey:'PERMISSION_ARRAY',
-  gitHub: 'https://github.com/xusenlin/ElementUIAdmin2',
-  ...localKey
-}
+  corporation: "公司名教育科技（北京）有限公司",
+  siteName: "ElementUi管理后台"
+};

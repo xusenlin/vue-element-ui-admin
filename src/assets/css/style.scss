@@ -12,13 +12,13 @@ body{
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
 a {
-    color: #3c8dbc;
+    color: mix(#000, $--color-primary, 10%);
     text-decoration: none;
 }
 
 ::-webkit-scrollbar {
     width: 4px;
-    height: 4px;
+    height: 8px;
     background-color: #F5F5F5;
 }
 
@@ -29,7 +29,8 @@ a {
 
 ::-webkit-scrollbar-thumb {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    background-color: #367fa9;
+    background-color: mix(#000, $--color-primary, 10%);
+    border-radius: 4px;
 }
 
 .el-menu .fa {
@@ -41,15 +42,4 @@ a {
 
 .el-menu .fa:not(.is-children) {
     font-size: 14px;
-}
-.gray-mode{
-    filter: grayscale(100%);
-}
-
-
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .2s ease-in-out;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-    opacity: 0;
 }
