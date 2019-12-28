@@ -45,7 +45,7 @@ export const Array = {
   trigger: "change"
 };
 
-export const Date = {type: "date", message: "请选择日期", trigger: "change"};
+export const Date = { type: "date", message: "请选择日期", trigger: "change" };
 
 export const Email = {
   type: "email",

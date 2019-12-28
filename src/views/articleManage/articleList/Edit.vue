@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    @open="openDialog"
+    @opened="openDialog"
     :width="dialogWidth"
     :title="title"
     :visible.sync="showEditDialog"
@@ -125,7 +125,6 @@ export default {
     },
     FillerFormField(id, data) {
       //可以外部填充回写做编辑用，也可以请求详情接口填充表单
-      console.log(id, data);
       this.$set(this.forms, "id", id);
       fillerLeft(this.forms, data);
     }

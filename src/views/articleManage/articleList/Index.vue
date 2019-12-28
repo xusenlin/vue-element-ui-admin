@@ -119,7 +119,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          console.log(row);
+          row.d = 0;
           // updateStatus({ id: row.id})
           //   .then(r => {
           //     this.$message({
