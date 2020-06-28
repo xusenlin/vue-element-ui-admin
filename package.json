@@ -1,10 +1,13 @@
 {
-  "name": "VueElementUiAdmin",
+  "name": "vue-element-ui-admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build  --mode dev",
+    "build:test": "vue-cli-service build --mode test",
+    "build:pre": "vue-cli-service build --mode pre",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

@@ -14,6 +14,7 @@ Vue.prototype.GlobalCfg = Config;
 Vue.use(elementUi);
 
 router.beforeEach((to, from, next) => {
+  store.commit("BUILD_ROUTES_CHAIN", to);
   window.document.title = to.meta.title
     ? to.meta.title + "-" + Config.siteName
     : Config.siteName;

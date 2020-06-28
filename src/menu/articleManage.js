@@ -6,12 +6,12 @@ export default {
     courseCardList: {
       name: "文章列表",
       permissionsKey: "",
-      path: "/article_manage/list"
+      path: "/article_manage_list"
     },
     organCardList: {
-      name: "文章分类",
+      name: "多层级路由示例",
       permissionsKey: "",
-      path: "/articleManage/category"
+      path: "/article_manage_category"
     }
   }
 };

@@ -46,9 +46,6 @@
       <el-table-column prop="reply_count" label="回复"></el-table-column>
       <el-table-column fixed="right" label="操作" width="240">
         <div slot-scope="s">
-          <el-button type="primary" size="small" @click="routeDemo(s.row)"
-            >多层级路由面包屑示例</el-button
-          >
           <el-button type="danger" size="small" @click="removeItem(s.row)"
             >删除</el-button
           >

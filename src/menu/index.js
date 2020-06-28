@@ -6,7 +6,7 @@ import articleManage from "./articleManage.js";
  */
 let home = {
   name: "首页",
-  path: "/",
+  path: "/home",
   permissionsKey: "",
   icon: "fa fa-tachometer"
 };

@@ -1,9 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Layout from "@/views/layout/App.vue";
-import ArticleManage from "./articleManage";
+import Common from "./common.js";
+import Dashboard from "./dashboard.js";
+import ArticleManage from "./articleManage.js";
 
 Vue.use(VueRouter);
+
+export const contentRoute = [...Dashboard, ...ArticleManage];
 
 const routes = [
   {
@@ -14,29 +18,9 @@ const routes = [
     meta: {
       title: "仪表盘"
     },
-    children: [
-      {
-        path: "home",
-        name: "DashboardHome",
-        meta: {
-          title: "首页"
-        },
-        component: resolve => require(["@/views/home/Index.vue"], resolve)
-      }
-    ]
+    children: contentRoute
   },
-  ArticleManage,
-  {
-    path: "/login",
-    name: "Login",
-    meta: {
-      title: "后台登录",
-      keepAlive: false
-    },
-    components: {
-      blank: resolve => require(["@/views/login/Login.vue"], resolve)
-    }
-  }
+  Common
 ];
 
 const originalPush = VueRouter.prototype.push;

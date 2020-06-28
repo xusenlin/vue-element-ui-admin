@@ -1,6 +1,6 @@
-import { useApiUrl } from "@/config/apiUrl";
-import CommonConfig from "@/config/common";
-import SystemConfig from "@/config/system";
+import { useApiUrl } from "@/config/url.js";
+import CommonConfig from "@/config/common.js";
+import SystemConfig from "@/config/system.js";
 
 export default {
   ...CommonConfig,

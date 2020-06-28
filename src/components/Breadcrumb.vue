@@ -3,10 +3,9 @@
     <div class="nav-bar-scroll">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item
-          v-for="item in $route.matched"
-          v-show="item.meta && item.meta.title"
+          v-for="item in routes.routesChain"
           :key="item.path"
-          :to="{ path: item.path }"
+          :to="{ path: item.path, query: item.query }"
         >
           {{ item.meta.title }}
         </el-breadcrumb-item>
@@ -14,7 +13,16 @@
     </div>
   </nav>
 </template>
-
+<script>
+import { mapState } from "vuex";
+export default {
+  name: "Breadcrumb",
+  data() {
+    return {};
+  },
+  computed: mapState(["routes"])
+};
+</script>
 <style lang="scss" scoped>
 @import "../assets/css/variables";
 .nav-bar {

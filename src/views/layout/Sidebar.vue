@@ -18,7 +18,7 @@
         style="border-color: #222d32"
         :collapse="system.miniSidebar === 1"
       >
-        <template v-for="(menu_v, menu_k) in menu">
+        <template v-for="(menu_v, menu_k) in displayMenu">
           <el-submenu v-if="menu_v.children" :index="menu_k" :key="menu_k">
             <template slot="title">
               <i :class="menu_v.icon"></i>
@@ -49,17 +49,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import Menu from "@/menu/index";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "Sidebar",
   data() {
-    return {
-      menu: Menu
-    };
+    return {};
   },
   methods: {},
-  computed: mapState(["system"])
+  computed: { ...mapState(["system"]), ...mapGetters(["displayMenu"]) }
 };
 </script>
 <style lang="scss" scoped>
