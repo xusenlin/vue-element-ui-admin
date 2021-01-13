@@ -1,3 +1,6 @@
+> 番外： [MareWood](https://github.com/xusenlin/MareWood) 是一个 Go 开发的轻量级前端部署工具,可以很灵活的配置各种打包部署环境并提供访问,特别是远程的时候，方便后端和测试使用。
+
+
 # VueElementUiAdmin
 
 ## Project setup
@@ -45,4 +48,4 @@ V1.00
 - 使用了全新依赖和 ESLint+Prettier 第二次重构(2020.01)。编辑器配合 Prettier 可实现 Ctrl+S 自动格式化美化代码
 - 添加 api 自动生成工具
 
-> 番外： [MareWood](https://github.com/xusenlin/MareWood) 是一个 Go 开发的轻量级前端部署工具,可以很灵活的配置各种打包部署环境并提供访问,特别是远程的时候，方便后端和测试使用。
+
