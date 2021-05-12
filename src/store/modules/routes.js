@@ -1,5 +1,4 @@
 import Storage from "good-storage";
-import { contentRoute } from "@/router/index.js";
 
 export const routes = {
   state: {
@@ -41,7 +40,7 @@ export const routes = {
         }
       }
       if (newRoutesChain) {
-        routesChain = buildRoutesChain(route, contentRoute);
+        routesChain = buildRoutesChain(route);
       }
       Storage.set("RoutesChain", routesChain);
       state.routesChain = routesChain;
@@ -49,7 +48,7 @@ export const routes = {
   }
 };
 
-function routesChainFunc(routesChain, route, contentRoute) {
+function routesChainFunc(routesChain, route) {
   if (routesChain.length > 10) {
     alert("路由层级超过 10 条，请检查 meta.parentName 是否相互指定。");
     return;
@@ -60,18 +59,9 @@ function routesChainFunc(routesChain, route, contentRoute) {
     path: route.path,
     query: route.query
   });
-  if (route.meta && route.meta.parentName) {
-    for (let i = 0; i < contentRoute.length; i++) {
-      let r = contentRoute[i];
-      if (r.name === route.meta.parentName) {
-        routesChainFunc(routesChain, r, contentRoute);
-        return;
-      }
-    }
-  }
 }
-export function buildRoutesChain(route, contentRoute) {
+export function buildRoutesChain(route) {
   let routesChain = [];
-  routesChainFunc(routesChain, route, contentRoute);
+  routesChainFunc(routesChain, route);
   return routesChain;
 }
