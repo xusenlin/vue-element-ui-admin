@@ -1,40 +1,32 @@
 {
-  "name": "vue-element-ui-admin",
-  "version": "0.1.0",
+  "name": "vite-project",
   "private": true,
+  "version": "0.0.0",
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:dev": "vue-cli-service build  --mode dev",
-    "build:test": "vue-cli-service build --mode test",
-    "build:pre": "vue-cli-service build --mode pre",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build:test": "vue-tsc --noEmit && vite build --mode=test",
+    "build:pre": "vue-tsc --noEmit && vite build --mode=pre",
+    "build:local": "vue-tsc --noEmit && vite build --mode=local",
+    "build": "vue-tsc --noEmit && vite build"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "core-js": "^3.4.3",
-    "element-ui": "^2.13.0",
-    "good-storage": "^1.1.0",
+    "@element-plus/icons-vue": "^2.0.6",
+    "@vueuse/core": "^8.7.5",
+    "axios": "^0.27.2",
+    "element-plus": "^2.2.8",
+    "good-storage": "^1.1.1",
+    "jsoneditor": "^9.9.0",
     "lodash": "^4.17.21",
-    "screenfull": "^5.0.0",
-    "vue": "^2.6.10",
-    "vue-router": "^3.1.3",
-    "vuex": "^3.1.2"
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.14",
+    "sass": "^1.53.0",
+    "vue": "^3.2.25",
+    "vue-router": "4"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.1.0",
-    "@vue/cli-plugin-eslint": "^4.1.0",
-    "@vue/cli-plugin-router": "^4.1.0",
-    "@vue/cli-plugin-vuex": "^4.1.0",
-    "@vue/cli-service": "^4.1.0",
-    "@vue/eslint-config-prettier": "^5.0.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-vue": "^5.0.0",
-    "node-sass": "^4.12.0",
-    "prettier": "^1.19.1",
-    "sass-loader": "^8.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "@vitejs/plugin-vue": "^2.3.3",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.34.7"
   }
 }

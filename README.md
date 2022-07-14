@@ -1,48 +1,19 @@
-> 番外： [MareWood](https://github.com/xusenlin/MareWood) 是一个 Go 开发的轻量级前端部署工具,可以很灵活的配置各种打包部署环境并提供访问,特别是远程的时候，方便后端和测试使用。
+# Vue 3(ScriptSetup) + TS + Vite + ElementPlus + Pinia + VueRouter + Axios
 
-# VueElementUiAdmin
-
-## Project setup
-
-```
-yarn install
-```
-
-## Compiles and hot-reloads for development
-
-```
-yarn dev //本地开发环境
-```
-
-## Compiles and minifies for production
-
-```
-yarn build:dev //线上开发环境
-yarn build:test //线上测试环境
-yarn build:pre //线上预发布环境
-yarn build //线上正式环境
-
-```
-
-## Lints and fixes files
-
-```
-yarn lint
-```
-
-## Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-## 更新日志
-
-V1.01 未发布
-
-- 完善了多种环境配置
-- 添加路由嵌套示例和保存每一层级路由参数
-- 整理 store，方便做菜单权限
-
-V1.00
-
-- 使用了全新依赖和 ESLint+Prettier 第二次重构(2020.01)。编辑器配合 Prettier 可实现 Ctrl+S 自动格式化美化代码
-- 添加 api 自动生成工具
+<ol>
+    <li>从头开始使用最新技术栈构建一个后台（前置知识点）</li>
+    <li>从头开始使用最新技术栈构建一个后台（前置知识点二）</li>
+    <li>从头开始使用最新技术栈构建一个后台（目录结构的安排和介绍）</li>
+    <li>从头开始使用最新技术栈构建一个后台（安装需要的包从人口文件开始）</li>
+    <li>从头开始使用最新技术栈构建一个后台（职责明确的Config配置）</li>
+    <li>从头开始使用最新技术栈构建一个后台（设计干干净净的存储仓库）</li>
+    <li>从头开始使用最新技术栈构建一个后台（页面布局和路由的联动）</li>
+    <li>从头开始使用最新技术栈构建一个后台（菜单、权限、路由的设计）</li>
+    <li>从头开始使用最新技术栈构建一个后台（制作一个类似Chrome的Tab）</li>
+    <li>从头开始使用最新技术栈构建一个后台（编写Axios的拦截以支持json和formData的请求）</li>
+    <li>从头开始使用最新技术栈构建一个后台（编写组合式Api表格的增删改查及分页功能）</li>
+    <li>从头开始使用最新技术栈构建一个后台（我害怕过于复杂的封装以至于可能会出现重复的代码）</li>
+    <li>从头开始使用最新技术栈构建一个后台（利用Vite插件功能和node环境生成重复的增删改查代码）</li>
+    <li>从头开始使用最新技术栈构建一个后台（点击一下自动部署任意分支和任意环境并提供多个网页地址）</li>
+</ol>
+地址：本教程代码库
