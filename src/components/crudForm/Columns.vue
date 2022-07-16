@@ -3,7 +3,7 @@
     <el-table-column
         v-bind="f.colAttrs"
         v-if="f.show"
-        :prop="f.field" 
+        :prop="f.field"
         :label="f.hasOwnProperty('title') ? f.title : f.field"
         show-overflow-tooltip>
       <template #default="s">
@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 
-import {withDefaults} from "vue/dist/vue";
+import {withDefaults} from "vue";
 import {TableColumns} from "@/components/crudForm/form";
 
 const props = withDefaults(defineProps<{
