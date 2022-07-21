@@ -2,6 +2,7 @@
 import {useAppStore} from "@/stores/app";
 import {useUserStore} from "@/stores/user";
 import {storeToRefs} from "pinia";
+import Breadcrumb from "@/views/layout/components/Breadcrumb.vue"
 import Fullscreen from "@/views/layout/components/Fullscreen.vue"
 import ThemeSwitch from "@/views/layout/components/themeSwitch/Index.vue"
 //===========
@@ -10,6 +11,11 @@ const { asideCollapse } = storeToRefs(appStore)
 //==========
 const userStore = useUserStore()
 const { userName } = storeToRefs(userStore)
+
+
+const loginOut = () => {
+  userStore.loginOut()
+}
 </script>
 
 <template>
@@ -20,11 +26,7 @@ const { userName } = storeToRefs(userStore)
           <expand />
         </el-icon>
       </el-button>
-      <el-breadcrumb class="breadcrumb" separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>资料</el-breadcrumb-item>
-        <el-breadcrumb-item>详情</el-breadcrumb-item>
-      </el-breadcrumb>
+      <Breadcrumb/>
     </div>
     <div class="header-right">
       <Fullscreen/>
@@ -37,7 +39,7 @@ const { userName } = storeToRefs(userStore)
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item >修改密码</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="loginOut">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

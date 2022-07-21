@@ -11,7 +11,7 @@
         <el-form-item
             v-for="(item,f) in formDesc"
             :key="f"
-            :label="item.hasOwnProperty('title') ? item.title : f" :prop="f">
+            :label="item.title ? item.title : f" :prop="f">
           <component :disabled="isEdit && item.editDisabled" v-bind="item.attrs" :is="item.componentName"
                      v-model="form[f]"/>
         </el-form-item>
@@ -28,28 +28,27 @@
 
 <script setup lang="ts">
 import {ref, withDefaults} from 'vue'
-import {ElMessage} from "element-plus"
-import {FormDesc, FormFields, RulesDesc} from "./form"
+import {ElMessage,FormInstance} from "element-plus"
+import {FormDesc, FormFields, RulesDesc} from "./type"
 
 
 const props = withDefaults(defineProps<{
   formDesc: FormDesc,
   rules: RulesDesc,
-  inline: boolean
+  inline?: boolean
 }>(), {inline: false})
 
 
 const emit = defineEmits<{
-  (e: 'submit', o: object, cb: () => void, isEdit: boolean): void,
+  (e: 'submit', o: FormFields, cb: () => void, isEdit: boolean): void,
 }>()
 
 
-let initFields: FormFields = {}
 
-const formRef = ref()
+const formRef = ref<FormInstance|null>(null)
 const dialogVisible = ref(false)
 const title = ref("编辑")
-const form = ref(initFields)//表单字段保存
+const form = ref<FormFields>({})//表单字段保存
 const isEdit = ref(false)//当前是新增还是编辑，用来在编辑的时候禁用字段
 
 

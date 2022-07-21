@@ -1,3 +1,3 @@
-export const  baseURL = import.meta.env.VITE_BASE_URL
+export const  baseURL:string = import.meta.env.VITE_BASE_URL
 
-export const  timeout = 5000
+export const  timeout:number = 5000

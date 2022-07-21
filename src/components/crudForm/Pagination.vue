@@ -14,10 +14,9 @@
 </template>
 
 <script setup lang="ts">
-
+import {AxiosPromise} from "axios"
 import {pageSizesArr} from "@/config/app";
 import {reactive, withDefaults, onMounted} from "vue";
-import {AxiosPromise, AxiosResponse} from "axios"
 
 const props = withDefaults(defineProps<{
   reqFunc: (params: object) => AxiosPromise,
@@ -30,7 +29,6 @@ const props = withDefaults(defineProps<{
   params: () => {
     return {}
   },
-  pageField: "list",
   pageSizesArr: () => (pageSizesArr),
 })
 
@@ -64,12 +62,12 @@ const getPageData = (): void => {
 
   props.reqFunc(params).then((result: any) => {
     let r = props.pageField ? result[props.pageField] : result
-
-    data.pageParams.pageNum = r.pageNum;
+    data.pageParams.pageNum = r.pages;
     data.total = parseInt(r.total) || 0;
-
     emit("pageData", result);
-  }).catch(() => {});
+  }).catch((e) => {
+    console.log(e)
+  });
 
 }
 
@@ -94,6 +92,5 @@ defineExpose({Refresh, QueryParams})
 .pagination {
   padding: 10px;
   display: flex;
-  background: #fff;
 }
 </style>

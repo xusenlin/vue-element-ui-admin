@@ -4,7 +4,7 @@ export const Dashboard: RouteRecordRaw = {
   path: '/',
   component: () => import('@/views/layout/MainLayout.vue'),
   redirect: '/dashboard',
-  meta: {icon: 'Guide', title: "首页", alwaysShow: true},
+  meta: {icon: 'Guide', title: "仪表盘", alwaysShow: true},
   children: [
     {
       path: 'dashboard',

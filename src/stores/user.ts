@@ -29,6 +29,10 @@ export const useUserStore = defineStore("user", {
     updateUserInfo(user: User) {
       this.info = user
       storage.set(UIK, user)
+    },
+    loginOut(){
+      storage.remove(UIK)
+      window.location.reload()
     }
   }
 })
@@ -41,4 +45,9 @@ export const getUserInfo = (): User => {
 export const getUserInfoByKey = (k: keyof User): any => {
   let u = getUserInfo()
   return u[k]
+}
+
+export const getToken = (): string => {
+  let u = getUserInfo()
+  return u["token"]
 }

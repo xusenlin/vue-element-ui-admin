@@ -1,42 +1,60 @@
 <template>
   <div class="box">
-    dsv
+    <ActionBar @reset="resetParams" @refresh="refreshTable">
+      <template #left>
+        <el-button
+            @click="openForm(null,'添加')"
+            type="primary"
+        >添加
+        </el-button>
+      </template>
+      <template #right>
+        <el-input v-model="searchParams.id" placeholder="请输入ID"  clearable />
+      </template>
+    </ActionBar>
+    <el-table :data="tableData" style="width: 100%" max-height="calc(100vh - 225px)">
+      <Columns :fields="tableFields"/>
+      <el-table-column fixed="right" width="170">
+        <template #header>
+          <div style="display: flex;justify-content: center;align-items: center">
+            <div style="margin-right: 10px">操作</div>
+            <SetColumn v-model:fields="tableFields"/>
+          </div>
+        </template>
+        <template #default="scope">
+          <el-button type="primary" @click.prevent="openForm(scope.row,'编辑')">
+            编辑
+          </el-button>
+          <el-button type="danger" @click.prevent="deleteRow(scope.row)">
+            删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <Pagination ref="paginationRef" :params="searchParams" :reqFunc="getListFunc" @pageData="setTableData" />
+    <FormEdit ref="editRef" :formDesc="formDesc" :rules="rules" @submit="submitForm"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue"
-import {List} from "@/api/demo";
-// import SearchContent from "./SearchContent.vue"
-// import { uploadDataApi } from "@/api/common.js"
-// import useTableField from "./tableField.js"
-// import useTableData from "./tableData.js"
-// import useBtnAction from "./btnAction.js"
-// import useAddEdit from "./formEdit.js"
-//
-
-onMounted(()=>{
-  List({}).then(r=>{
-    console.log(r)
-  }).catch(()=>{})
-})
-// let {tableFields} = useTableField()
-// let {
-//   searchParams, tableData, paginationRef,
-//   getDataFunc, setTableData, refreshTable,resetParams,cellDblclick
-// } = useTableData()
-//
-// let { deleteRow,literature,material,successImport } = useBtnAction(refreshTable)
-// let { editRef,rules,formDesc,submitForm } = useAddEdit(refreshTable)
+import useTableField from "./tableField"
+import useTableData from "./tableData"
+import useExtraAction from "./extraAction.js"
+import useFromEdit from "./formEdit"
 
 
-</script>
+const {searchParams, tableData, paginationRef, getListFunc, setTableData, refreshTable,resetParams} =  useTableData()
+const {tableFields} = useTableField()
+const { openForm,rules,formDesc,submitForm ,editRef} = useFromEdit(refreshTable)
+const { deleteRow } = useExtraAction(refreshTable)
+
+
+</script>x
 
 <style lang="scss" scoped>
 .box {
   width: 100%;
   height: 100%;
-  background: #FFF;
   padding: 10px 0;
 }
 </style>

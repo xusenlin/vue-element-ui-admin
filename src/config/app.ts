@@ -1,5 +1,7 @@
 import { EnvModeEnum } from "./type.d"
 
+export const version = "0.01"
+
 export const storagePrefixKey = "V-E-U-A:"
 
 export const appName = "VueElementUiAdmin"

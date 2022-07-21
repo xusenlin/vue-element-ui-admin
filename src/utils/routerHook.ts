@@ -19,7 +19,7 @@ export const routerHook = (router: Router): Router => {
   router.beforeEach((to, _from, next) => {
     nprogress.start();
     if (getUserInfoByKey("token") || whiteList.indexOf(to.path) !== -1) {
-      document.title = `${to.meta.title}-${appName}`
+      document.title = `${to.meta.title ? to.meta.title :"404"}-${appName}`
       next()
     } else {
       next("/login");

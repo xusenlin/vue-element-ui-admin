@@ -16,7 +16,7 @@
 <script setup lang="ts">
 
 import {withDefaults} from "vue";
-import {TableColumns} from "@/components/crudForm/form";
+import {TableColumns} from "@/components/crudForm/type";
 
 const props = withDefaults(defineProps<{
   fields: TableColumns[],

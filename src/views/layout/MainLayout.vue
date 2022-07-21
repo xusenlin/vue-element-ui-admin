@@ -36,7 +36,7 @@ const { asideCollapse } = storeToRefs(appStore)
       transition: 0.3s;
     }
     .el-main{
-      //padding: 0;
+      padding: 0;
     }
   }
 </style>

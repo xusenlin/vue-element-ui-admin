@@ -5,7 +5,6 @@ import 'jsoneditor/dist/jsoneditor.css';
 
 
 onMounted(() => {
-
   const container = document.getElementById("json-edit")
   const options = {
     onEditable: () => {
@@ -16,7 +15,6 @@ onMounted(() => {
     },
     mode: 'code',
     modes: ['code', 'tree'],
-
   }
   const editor = new JSONEditor(container, options)
 
@@ -41,7 +39,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <el-card class="action-card" shadow="never">
+    <el-card class="action-card" shadow="never" style="border: none">
       <template #header>
         FastCrudFrom v0.1
       </template>
@@ -52,14 +50,14 @@ onMounted(() => {
           一般来说，FastCrudFrom 会在你指定的目录生成5个文件，它们使用组合式API并且职责清晰，便于维护和修改。
         </h4>
         <ul>
-          <li>btnAction.ts 包含表格每一列数据的操作函数，例如删除、禁用、详情等操作函数</li>
           <li>formEdit.ts 包含新增和修改表单以及表单的验证规则的描述，每个字段的描述包含
             name(字段使用的组件，例如el-input也可以是自定义的组件如文件上传)，editDisabled(编辑时禁用编辑),attrs(组件的其他属性)
           </li>
           <li>tableData.ts 包含表格的数据（tableData）、搜索字段、刷新表格、重置表格、分页请求之前的参数过滤等操作函数</li>
           <li>tableField.ts
-            包含表格要显示的全部字段，被设置show=true的字段会默认显示出来，其他字段除非用户勾选了才会显示出来，显示的字段会被记录在本地，特殊的字段展示内容可以设置函数，如：fn:(v:string):string=>(v+"%")
+            包含表格要显示的全部字段，被设置show=true的字段会默认显示出来，其他字段除非用户勾选了才会显示出来，显示的字段会被记录在本地，特殊的字段展示内容可以设置函数，如：func:(v:string):string=>(v+"%")
           </li>
+          <li>extraAction.ts 包含表格额外的其他操作函数，例如删除、禁用、详情等操作函数</li>
           <li>Index.vue HTMl模板，负责导入以上API并将全部功能组合在一起</li>
         </ul>
       </div>
@@ -68,6 +66,7 @@ onMounted(() => {
       下面这个json编辑器是用来描述即将生成的代码，它的fields部分代码最好先根据你的分页接口返回的字段来生成。
     </h4>
     <div id="json-edit"></div>
+    <h4>生成的代码需要你对接和完善的地方我们都加了注释 //TODO 哦。</h4>
   </div>
 </template>
 

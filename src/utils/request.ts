@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {useUserStore} from '@/stores/user'
+import {getToken} from '@/stores/user'
 import {ElMessage, ElLoading} from 'element-plus'
 import {baseURL,timeout} from "@/config/req"
 
@@ -9,8 +9,6 @@ declare module "axios"{
     closeResponseInterceptors?:boolean
   }
 }
-
-const userStore = useUserStore()
 
 let loadingInstance:any;
 
@@ -27,8 +25,8 @@ service.interceptors.request.use(
         loadingInstance  = ElLoading.service()
       }
       // JWT鉴权处理
-      if (userStore.token && config.headers) {
-        config.headers.Authorization = userStore.token
+      if (getToken() && config.headers) {
+        config.headers.Authorization = getToken()
       }
       return config
     },
@@ -88,13 +86,22 @@ export const transformRequest = [function (data:any) {
   return formData
 }];
 
+type ReqInfo = {
+  url:string
+  headers:{
+    timeout:number
+    Authorization:string
+    "Content-Type":string
+  }
+}
 
-export const requestApi = (url:string) => {
+export const requestApi = (url:string) :ReqInfo => {
+
   return {
     url: baseURL + url,
     headers: {
       timeout,
-      Authorization: userStore.token,
+      Authorization: getToken(),
       "Content-Type":"application/x-www-form-urlencoded"
     }
   }
