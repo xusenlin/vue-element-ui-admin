@@ -4,29 +4,6 @@ const pathResolve = (dir) => {
     return resolve(__dirname, ".", dir)
 }
 
-let mockRouteMap = {};
-
-function matchRoute(req) {
-    let url = req.url;
-    let method = req.method.toLowerCase();
-    let routeList = mockRouteMap[method];
-
-    return routeList && routeList.find((item) => item.path === url);
-}
-
-function createRoute(mockConfList) {
-    mockConfList.forEach((mockConf) => {
-        let method = mockConf.type || 'get';
-        let path = mockConf.url;
-        let handler = mockConf.response;
-        let route = { path, method: method.toLowerCase(), handler };
-        if (!mockRouteMap[method]) {
-            mockRouteMap[method] = [];
-        }
-        console.log('create mock api: ', route.method, route.path);
-        mockRouteMap[method].push(route);
-    });
-}
 
 function send(body) {
     let chunk = JSON.stringify(body);

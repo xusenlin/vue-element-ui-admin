@@ -1,8 +1,8 @@
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// @ts-ignore
-// import fastCrudTable from "./plugins/fastCrudTable/index.js"
+
+import fastCrudTable from "./plugins/fastCrudFrom/index.js"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,5 +18,5 @@ export default defineConfig({
         },
     },
 
-    plugins: [vue()],
+    plugins: [vue(),fastCrudTable()],
 })

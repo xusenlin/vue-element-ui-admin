@@ -78,6 +78,7 @@ function showError(error:{code:number,message:string}) {
 
 export default service
 
+//上传formData时配置
 export const transformRequest = [function (data:any) {
   let formData = new FormData()
   for (let key in data) {
@@ -95,8 +96,8 @@ type ReqInfo = {
   }
 }
 
+//文件上传时可以使用这个生成关键上传信息
 export const requestApi = (url:string) :ReqInfo => {
-
   return {
     url: baseURL + url,
     headers: {

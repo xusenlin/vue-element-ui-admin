@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import {onMounted} from "vue"
+import {ElMessage} from "element-plus"
 import JSONEditor from 'jsoneditor';
+import { creatCrudTable } from "@/api/system/index"
 import 'jsoneditor/dist/jsoneditor.css';
 
+
+let editor:any = null
 
 onMounted(() => {
   const container = document.getElementById("json-edit")
@@ -16,12 +20,11 @@ onMounted(() => {
     mode: 'code',
     modes: ['code', 'tree'],
   }
-  const editor = new JSONEditor(container, options)
-
+  editor = new JSONEditor(container, options)
   const initialJson = {
     codeDir: "@/views/system/demo",
     searchParams: {
-      id: null,
+      id: "",
       name: "",
       tags: [],
     },
@@ -29,11 +32,22 @@ onMounted(() => {
       {"field": "id", title: "ID",formDisabled:true, isPrimaryKey: true},
       {"field": "name", title: "名字"},
       {"field": "title", title: "标题",editDisabled: true},
-      {"field": "progress", title: "进度",tableDisabled:true,}
+      {"field": "progress", title: "进度",tableDisabled:true}
     ]
   }
   editor.set(initialJson)
+
 })
+
+
+const buildCode = () => {
+  creatCrudTable(JSON.parse(editor.getText())).then(out=>{
+    ElMessage({
+      type: 'success',
+      message: out.data,
+    })
+  }).catch(()=>{})
+}
 
 </script>
 
@@ -62,11 +76,42 @@ onMounted(() => {
         </ul>
       </div>
     </el-card>
-    <h4>
-      下面这个json编辑器是用来描述即将生成的代码，它的fields部分代码最好先根据你的分页接口返回的字段来生成。
-    </h4>
-    <div id="json-edit"></div>
-    <h4>生成的代码需要你对接和完善的地方我们都加了注释 //TODO 哦。</h4>
+
+
+    <el-card class="action-card" shadow="never" style="border: none">
+      <template #header>
+        <div style="display: flex;justify-content: space-between">
+          <div>
+            下面这个json编辑器是用来描述即将生成的代码，它的fields部分代码最好先根据你的分页接口返回的字段来生成。注意：我们不会对生成的代码过度封装，熟悉了之后它会很简单便于你修改，你看看就知道了。并且在生成的代码需要你对接和完善的地方我们都加了注释 "//TODO"。
+          </div>
+        </div>
+      </template>
+      <div>
+        <div style="display: flex;width: 100%;">
+          <div style="flex: 1;margin-right: 20px">
+            <div id="json-edit"></div>
+          </div>
+          <div style="flex: 1">
+            <h4>在fields下的字段都有4个描述属性，意义如下</h4>
+            <ul>
+              <li>formDisabled:true ：这个字段不会出现在表单里面，但是在表格里面会展示出来</li>
+              <li>isPrimaryKey: true ：是表的主键，用于修改时使用,只能有一个，可以不填。</li>
+              <li>editDisabled:true ：这个字段新增时可以修改，但是编辑时不能修改</li>
+              <li>tableDisabled:true ：不在表格里显示</li>
+            </ul>
+            <div style="padding: 20px 0">
+              <p>github:https://github.com/xusenlin/vue-element-ui-admin</p>
+              <el-button
+                  @click="buildCode()"
+                  type="primary"
+              >生成代码
+              </el-button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </el-card>
   </div>
 </template>
 

@@ -2,6 +2,7 @@
 import {useRouter} from "vue-router";
 import { appName,version } from "@/config/app"
 import {useUserStore} from "@/stores/user";
+import {User as UserType} from "@/stores/type";
 import {reactive, ref} from "vue";
 
 enum PasswordType {
@@ -22,7 +23,7 @@ const passwordTypeChange = () => {
 }
 
 const login = ()=>{
-  let user:User = {name:"Admin",token:"xxxxxxx"}
+  let user:UserType = {name:"Admin",token:"xxxxxxx"}
   userStore.updateUserInfo(user)
   router.push("/")
 }

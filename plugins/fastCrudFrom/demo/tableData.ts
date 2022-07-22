@@ -12,7 +12,9 @@ export default function () {
     const tableData = ref([])
     const paginationRef = ref<null | PaginationRef>(null);
     //TODO 对接你们的搜索参数
-    const searchParams = ref({"id":"","name":"","tags":[]})
+    const searchParams = ref({
+        id:route.query.id ? route.query.id : "",
+    })
 
     const setTableData = (t:Pagination) :void => {
         tableData.value = t.records||[] //TODO 根据你们分页接口定义

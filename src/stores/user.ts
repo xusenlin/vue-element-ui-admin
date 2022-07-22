@@ -1,18 +1,11 @@
 import {defineStore} from "pinia"
 import storage from "good-storage"
+import { User,UserStore } from "./type"
 import {storagePrefixKey} from "@/config/app"
 
 const UIK = storagePrefixKey + "User"
 
-export interface User {
-  name: string,
-  token: string
-}//自己完善
 
-export interface UserStore {
-  info: User,
-//权限之类的
-}
 
 
 export const useUserStore = defineStore("user", {

@@ -11,10 +11,7 @@ export default function () {
   //TODO 对接你们的展示字段
   tableFields.value = userSetCol.length > 0 ? userSetCol :
       [
-        {"field":"id","title":"ID","show":true},
-        {"field":"name","title":"名字","show":true},
-        {"field":"title","title":"标题","show":true},
-
+        {"field": "id", title: "ID", "show": true}
       ]
   return {tableFields}
 }

@@ -16,17 +16,7 @@ export default function (refreshTable: () => void) {
     //   componentName: "CreateFileUrl",
     //   attrs: {},
     // }
-    name: inputDesc("名字"),
-    title:{
-      title:"标题",
-      editDisabled:true,
-      componentName:"el-input",
-      attrs:{
-        clearable:true
-      },
-    },
-    progress: inputDesc("进度"),
-
+    title: inputDesc("标题"),
   }
   const rules: RulesDesc = {//TODO 添加你的字段验证规则
     url: [required, len2To50],
@@ -34,7 +24,7 @@ export default function (refreshTable: () => void) {
   }
 
   const openForm = (row: FormFields, title: string) => {
-    editRef.value?.OpenEdit(row, title,"id")//TODO 主键id字段需要确认,默认不填使用id
+    editRef.value?.OpenEdit(row, title)//TODO 主键id字段需要确认,默认不填使用id
   }
 
   const submitForm = (fd: FormFields, cb: () => void, isEdit: boolean) => {
