@@ -34,6 +34,7 @@ export default function (refreshTable: () => void) {
   }
 
   const openForm = (row: FormFields, title: string) => {
+    // debugger
     editRef.value?.OpenEdit(row, title,"id")//TODO 主键id字段需要确认,默认不填使用id
   }
 

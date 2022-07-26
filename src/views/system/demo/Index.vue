@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import useTableField from "./tableField"
 import useTableData from "./tableData"
-import useExtraAction from "./extraAction.js"
+import useExtraAction from "./extraAction"
 import useFromEdit from "./formEdit"
 
 

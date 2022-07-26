@@ -1,9 +1,10 @@
+import {Ref} from "vue";
+import {cloneDeep} from "lodash"
 import {defineStore} from "pinia"
 import storage from "good-storage"
-import {cloneDeep} from "lodash"
+import {useDark} from '@vueuse/core'
 import {storagePrefixKey} from "@/config/app"
 import {Tab} from "@/components/tabsChrome/tab";
-import {useDark, useToggle as useDarkToggle} from '@vueuse/core'
 
 
 const ACK = storagePrefixKey + "Aside"
@@ -13,7 +14,7 @@ const TCK = storagePrefixKey + "Chrome"
 interface appStore {
   tabsChrome: Tab[],
   asideCollapse: boolean,
-  isDarkMode: any
+  isDarkMode: Ref
 }
 
 
@@ -38,7 +39,7 @@ export const useAppStore = defineStore("app", {
     },
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode
-      useDarkToggle(this.isDarkMode)
+      // useDarkToggle(this.isDarkMode)
     },
     pushTabsChrome(t: Tab) {
       let hasTab = this.tabsChrome.find((r: Tab) => r.path == t.path)

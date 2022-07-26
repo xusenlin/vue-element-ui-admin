@@ -31,7 +31,7 @@ export type PaginationRef = {
   QueryParams:()=>void,
 }
 
-export type Pagination = {//TODO 你们分页的接口返回参数
+export type Pagination = { //TODO 你们分页的接口返回参数
   records: never[]
 }
 

@@ -46,7 +46,7 @@ const closeTab = () => {
   justify-content: space-between;
   padding: 8px 14px;
   max-width: 140px;
-  min-width: 60px;
+  min-width: 100px;
   flex: 1;
   font-size: 14px;
   transition: background-color 0.3s;

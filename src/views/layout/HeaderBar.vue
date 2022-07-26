@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import {storeToRefs} from "pinia";
 import {useAppStore} from "@/stores/app";
 import {useUserStore} from "@/stores/user";
-import {storeToRefs} from "pinia";
+import {useMediaQuery} from "@vueuse/core";
 import Breadcrumb from "@/views/layout/components/Breadcrumb.vue"
 import Fullscreen from "@/views/layout/components/Fullscreen.vue"
 import ThemeSwitch from "@/views/layout/components/themeSwitch/Index.vue"
@@ -11,6 +12,8 @@ const { asideCollapse } = storeToRefs(appStore)
 //==========
 const userStore = useUserStore()
 const { userName } = storeToRefs(userStore)
+
+const isMobile = useMediaQuery(`(max-width: 750px)`)
 
 
 const loginOut = () => {
@@ -26,7 +29,7 @@ const loginOut = () => {
           <expand />
         </el-icon>
       </el-button>
-      <Breadcrumb/>
+      <Breadcrumb v-if="!isMobile" />
     </div>
     <div class="header-right">
       <Fullscreen/>
