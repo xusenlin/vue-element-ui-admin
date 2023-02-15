@@ -12,7 +12,7 @@
             v-for="(item,f) in formDesc"
             :key="f"
             :label="item.title ? item.title : f" :prop="f">
-          <component :disabled="isEdit && item.editDisabled" v-bind="item.attrs" :is="item.componentName"
+          <component :disabled="actionType === FormActionType.Edit && item.editDisabled" v-bind="item.attrs" :is="item.componentName"
                      v-model="form[f]"/>
         </el-form-item>
       </el-form>
@@ -28,8 +28,8 @@
 
 <script setup lang="ts">
 import {ref, withDefaults} from 'vue'
-import {ElMessage,FormInstance} from "element-plus"
-import {FormDesc, FormFields, RulesDesc} from "./type"
+import {ElMessage, FormInstance} from "element-plus"
+import {FormActionType, FormDesc, FormFields, RulesDesc} from "./type"
 
 
 const props = withDefaults(defineProps<{
@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<{
 
 
 const emit = defineEmits<{
-  (e: 'submit', o: FormFields, cb: () => void, isEdit: boolean): void,
+  (e: 'submit', o: FormFields, cb: () => void, actionType: FormActionType): void,
 }>()
 
 
@@ -49,20 +49,28 @@ const formRef = ref<FormInstance|null>(null)
 const dialogVisible = ref(false)
 const title = ref("编辑")
 const form = ref<FormFields>({})//表单字段保存
-const isEdit = ref(false)//当前是新增还是编辑，用来在编辑的时候禁用字段
+const actionType = ref<FormActionType>(0)//当前是新增、编辑、预览、核实？？
 
 
-const OpenEdit = (row: FormFields, t: string, idField: string = "id") => {//idField 用于编辑的时候主键id
+const OpenEdit = (row: FormFields, t: string,action:FormActionType,idField = "id") => {
+  //idField 用于编辑的时候主键id
+  //新增时也可以设置 row 给表单默认值，比如编辑用户默认密码之类的
   title.value = t
   resetForm()
   form.value = {}
-  isEdit.value = false
+  actionType.value = action
+
   if (row) {
-    isEdit.value = true
     for (let k in props.formDesc) {
-      form.value[k] = row[k]
+      form.value[k] = row[k] || null
     }
-    form.value[idField] = row[idField]
+    if(action === FormActionType.Edit){
+      form.value[idField] = row[idField]
+    }
+  }else {
+    for (let k in props.formDesc) {
+      form.value[k] = null
+    }
   }
   dialogVisible.value = true
 }
@@ -75,7 +83,7 @@ const submitForm = async () => {
       emit('submit', form.value, () => {
         dialogVisible.value = false
         ElMessage.success(`${title.value}成功`)
-      }, isEdit.value)
+      }, actionType.value)
     } else {
       ElMessage.warning(`请检查必填内容`)
     }

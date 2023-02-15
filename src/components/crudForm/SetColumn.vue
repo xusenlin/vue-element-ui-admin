@@ -29,8 +29,8 @@
         >
       </div>
       <div>
-        <el-button type="primary" @click="confirm">确认</el-button>
-        <el-button @click="dialogShow = false">取消</el-button>
+        <el-button text  type="primary" @click="confirm">确认</el-button>
+        <el-button text  @click="dialogShow = false">取消</el-button>
       </div>
     </template>
   </el-dialog>
@@ -39,7 +39,8 @@
 <script setup>
 import {ref} from "vue";
 import {ElMessage} from "element-plus";
-import {useRoute, useRouter} from 'vue-router'
+import goodStorage from "good-storage"
+import {useRoute} from 'vue-router'
 
 const routePath = useRoute().path
 
@@ -82,7 +83,7 @@ const confirm = () => {
       r.show = false
     }
   })
-  localStorage.setItem("userSetTableColumn:" + routePath, JSON.stringify(v))
+  goodStorage.set("userSetTableColumn:" + routePath,checkedFields.value)
   emit('update:fields', v)
   dialogShow.value = false
 }

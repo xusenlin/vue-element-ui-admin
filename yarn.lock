@@ -39,6 +39,11 @@
   resolved "https://registry.npmmirror.com/@sphinxxxx/color-conversion/-/color-conversion-2.2.2.tgz#03ecc29279e3c0c832f6185a5bfa3497858ac8ca"
   integrity sha512-XExJS3cLqgrmNBIP3bBw6+1oQ1ksGjFh0+oClDKFYpCCqx/hlqwWO5KO/S63fzUo67SxI9dMrF0y5T/Ey7h8Zw==
 
+"@types/good-storage@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmmirror.com/@types/good-storage/-/good-storage-1.1.0.tgz#4d7d37918348e5b6e5e1060d692b84997e9a5a9f"
+  integrity sha512-N6zADalBl9mmZONn/ljfVKyFljCH1dGaIq7rSaYUCIRL8C8TypIFe1fXfFD2Z6LsdcOFcQEhXauClCJIJvoiHg==
+
 "@types/lodash-es@^4.17.6":
   version "4.17.6"
   resolved "https://registry.npmmirror.com/@types/lodash-es/-/lodash-es-4.17.6.tgz#c2ed4c8320ffa6f11b43eb89e9eaeec65966a0a0"

@@ -1,7 +1,7 @@
 import {ref} from "vue";
 import {save} from "@/api/demo"//TODO 对接新增和保存接口
 import {dataDesc, inputDesc,selectDesc} from "@/components/crudForm/formDescFn"
-import {FormDesc, FormEditRef, FormFields, RulesDesc} from "@/components/crudForm/type";
+import {FormActionType, FormDesc, FormEditRef, FormFields, RulesDesc} from "@/components/crudForm/type";
 import {required, len2To50,fillerFieldRules} from "@/components/crudForm/formRules";
 import { sex } from "@/config/options"
 
@@ -30,16 +30,16 @@ export default function (refreshTable: () => void) {
   }
   const rules: RulesDesc = {//TODO 添加你的字段验证规则
     url: [required, len2To50],
-    ...fillerFieldRules(["sex","data"],[required])
+    ...fillerFieldRules(["sex","name"],[required])
   }
 
-  const openForm = (row: FormFields, title: string) => {
+  const openForm = (row: FormFields, title: string, action:FormActionType) => {
     // debugger
-    editRef.value?.OpenEdit(row, title,"id")//TODO 主键id字段需要确认,默认不填使用id
+    editRef.value?.OpenEdit(row, title,action)//TODO 主键id字段需要确认,默认不填使用id
   }
 
-  const submitForm = (fd: FormFields, cb: () => void, isEdit: boolean) => {
-    console.log(isEdit)//isEdit是编辑还是新增，你的主键已经包含在fd里面了，默认是id,也可以在调用弹窗处指定
+  const submitForm = (fd: FormFields, cb: () => void, action: FormActionType) => {
+    console.log(action)//是编辑还是新增，你的主键已经包含在fd里面了，默认是id,也可以在调用弹窗处指定
     //TODO 对接新增和保存接口
     save(fd).then(() => {
       cb()

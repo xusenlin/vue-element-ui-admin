@@ -9,8 +9,8 @@ const pathResolve = (dir) => {
 
 export default function (options = {}) {
   return {
-    configureServer: function ({app}) {
-      const middleware = (req, res, next) => {
+    configureServer: function (server) {
+      const m = (req, res, next) => {
         let url = req.url;
         let method = req.method.toLowerCase();
         if (url.indexOf("/creatCrudTableApi") !== -1 && method == "post") {
@@ -27,7 +27,7 @@ export default function (options = {}) {
           next();
         }
       };
-      app.use(middleware);
+      server.middlewares.use(m);
     },
   };
 }
@@ -97,7 +97,7 @@ const editTableFieldTs = (code,fields)=>{
   if(!fields || !Array.isArray(fields) || fields.length==0){
     return  code
   }
-  let kw = `        {"field": "id", title: "ID", "show": true}`
+  let kw = `    {"field":"id","title":"ID","show":true},`
   let temp = ""
   fields.forEach(f=>{
     if(f.tableDisabled){
@@ -109,7 +109,7 @@ const editTableFieldTs = (code,fields)=>{
       show:true
     }
 
-    temp += `        ${JSON.stringify(r)},\n`
+    temp += `    ${JSON.stringify(r)},\n`
   })
 
   return code.replace(kw,temp)

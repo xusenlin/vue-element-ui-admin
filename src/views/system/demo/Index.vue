@@ -3,7 +3,7 @@
     <ActionBar @reset="resetParams" @refresh="refreshTable">
       <template #left>
         <el-button
-            @click="openForm(null,'添加')"
+            @click="openForm(null,'添加',FormActionType.Add)"
             type="primary"
         >添加
         </el-button>
@@ -22,7 +22,7 @@
           </div>
         </template>
         <template #default="scope">
-          <el-button type="primary" @click.prevent="openForm(scope.row,'编辑')">
+          <el-button type="primary" @click.prevent="openForm(scope.row,'编辑',FormActionType.Edit)">
             编辑
           </el-button>
           <el-button type="danger" @click.prevent="deleteRow(scope.row)">
@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { FormActionType } from "@/components/crudForm/type"
 import useTableField from "./tableField"
 import useTableData from "./tableData"
 import useExtraAction from "./extraAction"

@@ -9,11 +9,8 @@ declare module '*.vue' {
 
 
 
-declare module "good-storage"
 
 declare module "nprogress"
-
-declare module "lodash"
 
 declare module "fastCrudTable"
 

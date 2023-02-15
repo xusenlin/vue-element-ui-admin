@@ -14,8 +14,8 @@ export type RulesDesc = FormRules
 
 
 export type FormFields = {
-  [field: string]: [fieldVal: any]
-} | undefined
+  [field: string]: any
+} | undefined | null
 
 export type TableColumns = {//表格的列
   field: string //字段名称
@@ -36,5 +36,12 @@ export type Pagination = { //TODO 你们分页的接口返回参数
 }
 
 export type FormEditRef = {
-  OpenEdit:(row: FormFields, title: string, idField: string = "id")=>void
+  OpenEdit:(row: FormFields, title: string, action:FormActionType,idField?: string)=>void
+}
+
+export enum FormActionType  {//表单操作类型
+  Add,
+  Edit,
+  Pre,
+  //其他类型，例如我们需要的审核
 }

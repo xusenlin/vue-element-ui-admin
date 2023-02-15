@@ -1,5 +1,12 @@
+import {cloneDeep} from "lodash"
+import goodStorage from "good-storage";
+import {TableColumns} from "@/components/crudForm/type";
 
-
+/**
+ * 重置一个参数对象
+ * @param args
+ * @param def
+ */
 export function resetArgs<T>(args:T, def:Partial<T> = {}):T {
 
   let val: { [k:string]:any }  = {}
@@ -17,3 +24,57 @@ export function resetArgs<T>(args:T, def:Partial<T> = {}):T {
   return val as T
 }
 
+/**
+ * 通过本地返回上次设置的表格字段
+ * @param routePath
+ * @param tableFields
+ */
+export function showFieldsByLocal(routePath: string, tableFields: TableColumns[]): TableColumns[] {
+  let checkedFields = goodStorage.get("userSetTableColumn:" + routePath, [])
+
+  if (checkedFields.length === 0) return tableFields
+
+  let fields = cloneDeep(tableFields)
+
+  fields.forEach(r => {
+    if (checkedFields.indexOf(r.field) !== -1) {
+      r.show = true
+    } else {
+      r.show = false
+    }
+  })
+  return fields
+}
+
+/**
+ * 下载或者保存一个Blob
+ * @param blob
+ * @param fileName
+ * @param isOpen
+ * 接口返回数据流时，如果是pdf可以设置isOpen直接新窗口打开
+ * export function exportReport(params: { fileCode:string }) {
+ *   return request({
+ *     responseType:"blob",
+ *     closeResponseInterceptors:true,
+ *     url: '/customer-service/open/api/report/getReport',
+ *     method: 'get',
+ *     params
+ *   })
+ * }
+ */
+export function saveBlob(blob:Blob,fileName:string,isOpen = false):void{
+
+  let url = window.URL.createObjectURL(blob);
+  if(isOpen){
+    window.open(url)
+  }else {
+    let a = document.createElement("a");
+    document.body.appendChild(a);
+    a.setAttribute("display","none")
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+  }
+}
