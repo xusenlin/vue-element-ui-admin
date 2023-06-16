@@ -1,21 +1,16 @@
 import { ref,nextTick} from 'vue'
-import {useRoute} from "vue-router";
 import { resetArgs } from "@/utils/app"
-import {List as getListFunc} from "@/api/demo"; //TODO 对接你的分页接口
-import {Pagination, PaginationRef} from "@/components/crudForm/type"
-
 
 
 export default function () {
-
-    const route = useRoute()
     const tableData = ref([])
-    const paginationRef = ref<null | PaginationRef>(null);
-    //TODO 对接你们的搜索参数
-    const searchParams = ref({"id":"","name":"","tags":[]})
+    const paginationRef = ref<{ Refresh:()=>void, QueryParams:()=>void } | null>(null);
+    const searchParams = ref<any>({"id":"","name":"","tags":[]})
 
-    const setTableData = (t:Pagination) :void => {
-        tableData.value = t.records||[] //TODO 根据你们分页接口定义
+    const setTableData = (r:any) :void => {
+        if(Array.isArray(r.records) && r.records.length!==0){
+            tableData.value = r.records||[]
+        }
     }
 
     const refreshTable = ():void => {
@@ -31,7 +26,6 @@ export default function () {
         searchParams,
         tableData,
         paginationRef,
-        getListFunc,
         setTableData,
         refreshTable,
         resetParams

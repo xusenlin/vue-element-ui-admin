@@ -1,11 +1,11 @@
 import {reactive} from "vue";
-import {RouteRecordRaw} from "vue-router";
+import {RouteRecordRaw} from "vue-router/dist/vue-router.d.ts";
 import {menuRoute} from "@/router/index";
 
 
 //处理路由让其作为菜单
 //当hideMenu会删除此菜单。默认当有children字段并且里面为空时不显示当前菜单，但是在此路由添加alwaysShow也会显示出来
-const menuRouteFilter = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
+const menu = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
   let result: RouteRecordRaw[] = [];
   routes.forEach(r => {
     let { meta,path,redirect } = r;
@@ -15,7 +15,7 @@ const menuRouteFilter = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
     let v: RouteRecordRaw = {meta,path,redirect} as RouteRecordRaw;
 
     let children = r.children && Array.isArray(r.children) && r.children.length !== 0 ?
-        menuRouteFilter(r.children) : []
+        menu(r.children) : []
 
     if (children.length !== 0) {
       result.push({...v,children})
@@ -28,6 +28,6 @@ const menuRouteFilter = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
   return result
 }
 
-const routeMenu:RouteRecordRaw[] = menuRouteFilter(menuRoute)
+const routeMenu:RouteRecordRaw[] = menu(menuRoute)
 
 export const menus = reactive(routeMenu)

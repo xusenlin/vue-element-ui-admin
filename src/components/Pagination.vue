@@ -14,23 +14,26 @@
 </template>
 
 <script setup lang="ts">
-import {AxiosPromise} from "axios"
 import {pageSizesArr} from "@/config/app";
 import {reactive, withDefaults, onMounted} from "vue";
 
-const props = withDefaults(defineProps<{
-  reqFunc: (params: object) => AxiosPromise,
+
+export interface Props {
+  reqFunc: (params: any) => Promise<any>,
   filterParamsFunc?: (params: object) => object,
   params?: object,
   pageField?: string,
   pageSizesArr?: number[],
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   filterParamsFunc: (params: object) => params,
   params: () => {
     return {}
   },
   pageSizesArr: () => (pageSizesArr),
 })
+
 
 const emit = defineEmits<{
   (e: 'pageData', pageData: object): void,

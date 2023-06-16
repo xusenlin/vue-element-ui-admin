@@ -13,12 +13,11 @@
       </template>
     </ActionBar>
     <el-table :data="tableData" style="width: 100%" max-height="calc(100vh - 225px)">
-      <Columns :fields="tableFields"/>
+
       <el-table-column fixed="right" width="170">
         <template #header>
           <div style="display: flex;justify-content: center;align-items: center">
             <div style="margin-right: 10px">操作</div>
-            <SetColumn v-model:fields="tableFields"/>
           </div>
         </template>
         <template #default="scope">
@@ -31,26 +30,25 @@
         </template>
       </el-table-column>
     </el-table>
-    <Pagination ref="paginationRef" :params="searchParams" :reqFunc="getListFunc" @pageData="setTableData" />
-    <FormEdit ref="editRef" :formDesc="formDesc" :rules="rules" @submit="submitForm"/>
+    <Pagination ref="paginationRef" :params="searchParams" :reqFunc="paginationList" @pageData="setTableData" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { FormActionType } from "@/components/crudForm/type"
-import useTableField from "./tableField"
-import useTableData from "./tableData"
+import { paginationList } from "@/api/demo/index.ts"
+import usePagination from "@/compositionApi/pagination.ts"
 import useExtraAction from "./extraAction"
-import useFromEdit from "./formEdit"
 
 
-const {searchParams, tableData, paginationRef, getListFunc, setTableData, refreshTable,resetParams} =  useTableData()
-const {tableFields} = useTableField()
-const { openForm,rules,formDesc,submitForm ,editRef} = useFromEdit(refreshTable)
+const {searchParams, tableData, paginationRef, setTableData, refreshTable,resetParams} =  usePagination()
+// const {tableFields} = useTableField()
+// const { openForm,rules,formDesc,submitForm ,editRef} = useFromEdit(refreshTable)
 const { deleteRow } = useExtraAction(refreshTable)
 
 
-</script>x
+
+
+</script>
 
 <style lang="scss" scoped>
 .box {

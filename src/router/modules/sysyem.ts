@@ -7,11 +7,6 @@ export const System: RouteRecordRaw = {
   meta: {icon: 'ElementPlus', title: "系统工具"},
   children: [
     {
-      path: 'fastCrudFrom',
-      component: () => import('@/views/system/fastCrudFrom/Index.vue'),
-      meta: { title: "快速生成表单"}
-    },
-    {
       path: 'demo',
       component: () => import('@/views/system/demo/Index.vue'),
       meta: {title: "生成的demo"},

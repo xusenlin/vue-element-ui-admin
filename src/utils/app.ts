@@ -1,6 +1,3 @@
-import {cloneDeep} from "lodash"
-import goodStorage from "good-storage";
-import {TableColumns} from "@/components/crudForm/type";
 
 /**
  * 重置一个参数对象
@@ -22,28 +19,6 @@ export function resetArgs<T>(args:T, def:Partial<T> = {}):T {
     }
   }
   return val as T
-}
-
-/**
- * 通过本地返回上次设置的表格字段
- * @param routePath
- * @param tableFields
- */
-export function showFieldsByLocal(routePath: string, tableFields: TableColumns[]): TableColumns[] {
-  let checkedFields = goodStorage.get("userSetTableColumn:" + routePath, [])
-
-  if (checkedFields.length === 0) return tableFields
-
-  let fields = cloneDeep(tableFields)
-
-  fields.forEach(r => {
-    if (checkedFields.indexOf(r.field) !== -1) {
-      r.show = true
-    } else {
-      r.show = false
-    }
-  })
-  return fields
 }
 
 /**
@@ -77,4 +52,13 @@ export function saveBlob(blob:Blob,fileName:string,isOpen = false):void{
     a.remove();
     window.URL.revokeObjectURL(url);
   }
+}
+
+
+export const toFormData = (data:any) =>{
+  const formData = new FormData()
+  for (const key in data) {
+    formData.append(key, data[key])
+  }
+  return formData
 }

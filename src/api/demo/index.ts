@@ -1,30 +1,25 @@
-import request,{requestApi} from '@/utils/request'
-import {FormFields} from "@/components/crudForm/type";
+import { request } from "@/utils/request.ts"
 
-export function List(data:any)  {
-  return request({
+export function paginationList(data:string)  {
+  return request<string[]>({
     url: '/medical-service/manager/v1/literature/list',
     method: 'post',
     data,
   })
 }
 
-export function save(data:FormFields)  {
-  return request({
+export function save(data:string)  {
+  return request<string>({
     url: '/medical-service/manager/v1/literature/save',
     method: 'post',
     data,
   })
 }
-export function deleteMaterial(data:any)  {
-  return request({
+export function deleteMaterial(data: { id:string })  {
+  return request<string[]>({
     url: '/medical-service/manager/v1/literature/delete',
     method: 'post',
     data,
   })
 }
 
-
-export const upload = ()=>{
-  return requestApi("/medical-service/manager/v1/literature/upload")
-}

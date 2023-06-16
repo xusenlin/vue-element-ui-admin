@@ -1,120 +1,84 @@
-import axios from 'axios'
-import {getToken} from '@/stores/user'
-import {ElMessage, ElLoading} from 'element-plus'
-import {baseURL,timeout} from "@/config/req"
+import { getToken } from "@/utils/user.ts"
+import { toFormData } from "@/utils/app.ts"
+import axios from "axios";
+import { baseURL,timeout,statusDesc } from "@/config/request.ts"
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse,InternalAxiosRequestConfig } from "axios";
 
-declare module "axios"{
+export type ResponseResult<T> = {
+  code: number;
+  msg: string;
+  data: T;
+};
+
+declare module 'axios' {
   export interface AxiosRequestConfig{
-    loading?:boolean,
-    token?:string,
-    closeResponseInterceptors?:boolean
-  }
-  export interface AxiosInstance {
-    <T = any>(config: AxiosRequestConfig): Promise<T>;
-    request<T = any> (config: AxiosRequestConfig): Promise<T>;
-    get<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
-    delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
-    head<T = any>(url: string, config?: AxiosRequestConfig): Promise<T>;
-    post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
-    put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
-    patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T>;
+    closeLoading?:boolean,//默认所有请求Loading，可关闭
+    token?:string,//默认获取本地token，可针对某个请求写死或置空
+    isFormRequest?:boolean,//将请求自动转换为表单请求
+    closeInstance?:boolean
   }
 }
 
-let loadingInstance:any;
+export type RequestConfig = Omit<AxiosRequestConfig, 'closeInstance' | 'transformRequest'>
 
-const service = axios.create({
-  baseURL,
-  timeout,
-  headers:{},
-})
+export class Request {
+  instance: AxiosInstance;
+  constructor(config: AxiosRequestConfig) {
+    this.instance = axios.create(config);
+    this.instance.interceptors.request.use(
+        (config:InternalAxiosRequestConfig) => {
+          if ("token" in config){
+            config.headers.Authorization = config.token
+          }else {
+            config.headers.Authorization = getToken()
+          }
+          if (config.isFormRequest){config.transformRequest = toFormData}
+          if(!config.closeLoading){
+            //Loading
+          }
+          return config;
+        },
+        (err: any) => {
+          // 请求错误，这里可以用全局提示框进行提示
+          return Promise.reject(err);
+        }
+    );
 
-// 请求前的统一处理
-service.interceptors.request.use(
-    (config) => {
-      if (config.loading) {
-        loadingInstance  = ElLoading.service()
-      }
-      // JWT鉴权处理
-      if (getToken() && config.headers) {
-        config.headers.Authorization = getToken()
-      }
-      return config
-    },
-    (error) => {
-      console.log(error) // for debug
-      return Promise.reject(error)
-    }
-)
-
-service.interceptors.response.use(
-    (response) => {
-      if (loadingInstance) {
-        loadingInstance.close()
-      }
-      if(response.config.closeResponseInterceptors){
-        return response;
-      }
-      const res = response.data
-      if (res.code === "00000") {
-        return res.data
-      } else {
-        showError(res)
-        return Promise.reject(res)
-      }
-    },
-    (error) => {
-      if (loadingInstance) {
-        loadingInstance.close()
-      }
-      let {code, msg: message} = error.response.data;
-      showError({code, message})
-      return Promise.reject(error.response)
-    }
-)
-
-function showError(error:{code:number,message:string}) {
-  if (error.code === 403) {
-    // to re-login
-    // store.dispatch('user/loginOut')
-  } else {
-    ElMessage({
-      message: error.message || '服务异常',
-      type: 'error',
-      duration: 3 * 1000
-    })
+    this.instance.interceptors.response.use(
+        (res: AxiosResponse) => {
+          // 直接返回res，当然你也可以只返回res.data
+          // 系统如果有自定义code也可以在这里处理
+          return res;
+        },
+        (err: any) => {
+          let message = "";
+          if (statusDesc[err.response.status]){
+            message = statusDesc[err.response.status]
+          }else {
+            message = `连接出错(${err.response.status})!`
+          }
+          // 这里错误消息可以使用全局弹框展示出来
+          // 比如element plus 可以使用 ElMessage
+          // ElMessage({
+          //   showClose: true,
+          //   message: `${message}，请检查网络或联系管理员！`,
+          //   type: "error",
+          // });
+          // 这里是AxiosError类型，所以一般我们只reject我们需要的响应即可
+          console.log(message)
+          return Promise.reject(err.response);
+        }
+    );
   }
-
-}
-
-export default service
-
-//上传formData时配置
-export const transformRequest = [function (data:any) {
-  let formData = new FormData()
-  for (let key in data) {
-    formData.append(key, data[key])
+  //未拦截请求，响应原封不动返回
+  public unhandledRequest<T>(config: RequestConfig): Promise<AxiosResponse<ResponseResult<T>>> {
+    return this.instance.request(config);
   }
-  return formData
-}];
-
-type ReqInfo = {
-  url:string
-  headers:{
-    timeout:number
-    Authorization:string
-    "Content-Type":string
+  //做了拦截处理，自动报错，只返回关心的数据
+  public request<T>(config: RequestConfig): Promise<T> {
+    return this.instance.request(config);
   }
 }
 
-//文件上传时可以使用这个生成关键上传信息
-export const requestApi = (url:string) :ReqInfo => {
-  return {
-    url: baseURL + url,
-    headers: {
-      timeout,
-      Authorization: getToken(),
-      "Content-Type":"application/x-www-form-urlencoded"
-    }
-  }
-}
+export const { request,unhandledRequest } = new Request({baseURL,timeout})
+

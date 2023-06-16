@@ -3,7 +3,7 @@ import {storeToRefs} from "pinia";
 import {useRoute} from 'vue-router'
 import {appName} from "@/config/app"
 import {useAppStore} from "@/stores/app";
-import {menus} from "@/router/menuRouteFilter"
+import {menus} from "@/router/menu.ts"
 import RouteMenu from "./components/RouteMenu.vue";
 
 const route = useRoute()

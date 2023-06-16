@@ -8,7 +8,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <el-card class="action-card" :body-style="{padding:0}" shadow="never">
+  <el-card class="action-card" shadow="never">
     <template #header>
       <div class="action-card-header">
         <div class="l">

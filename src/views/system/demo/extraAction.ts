@@ -33,8 +33,6 @@ export default function (refreshTable: () => void) {
         router.push({path:"/",query:{id:row.id}})
     }
 
-
-
     return {
         details,
         deleteRow,

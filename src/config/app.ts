@@ -1,8 +1,19 @@
-import { EnvModeEnum } from "./type.d"
+export enum EnvModeEnum {
+  Dev = "development",//开发环境
+  Test = "test",
+  Pre = "pre",
+  Pro = "production",
+}
 
 export const version = "0.01"
 
 export const storagePrefixKey = "V-E-U-A:"
+
+
+export const tokenKey = storagePrefixKey+"token"
+
+export const userInfoKey = storagePrefixKey+"userInfo"
+
 
 export const appName = "VueElementUiAdmin"
 
