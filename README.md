@@ -1,5 +1,7 @@
 # Vue 3(ScriptSetup) + TS + Vite + ElementPlus + Pinia + VueRouter + Axios
 
+## 追求极简实用，杜绝花里胡哨。
+
 > 番外： [MareWood](https://github.com/xusenlin/MareWood) 是一个 Go 开发的轻量级前端部署工具,可以很灵活的配置各种打包部署环境并提供访问,特别是远程的时候，方便后端和测试使用。
 
 
@@ -8,6 +10,7 @@
 - 干净简单职责清晰的一个后台模板，开箱即用。
 - 简单处理Axios以方便json、formData、文件上传的操作
 - 全部使用vue3 的单文件 ScriptSetup
+- 封装分页一把梭哈，快速接入业务
 
 # 系统一览
 
