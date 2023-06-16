@@ -71,14 +71,16 @@ export class Request {
     );
   }
   //未拦截请求，响应原封不动返回
-  public unhandledRequest<T>(config: RequestConfig): Promise<AxiosResponse<ResponseResult<T>>> {
+  unhandledRequest<T>(config: RequestConfig): Promise<AxiosResponse<ResponseResult<T>>> {
     return this.instance.request(config);
   }
   //做了拦截处理，自动报错，只返回关心的数据
-  public request<T>(config: RequestConfig): Promise<T> {
+  request<T>(config: RequestConfig): Promise<T> {
     return this.instance.request(config);
   }
 }
 
-export const { request,unhandledRequest } = new Request({baseURL,timeout})
+export  default new Request({baseURL,timeout})
+
+
 

@@ -3,7 +3,6 @@
     <ActionBar @reset="resetParams" @refresh="refreshTable">
       <template #left>
         <el-button
-            @click="openForm(null,'添加',FormActionType.Add)"
             type="primary"
         >添加
         </el-button>
@@ -13,7 +12,7 @@
       </template>
     </ActionBar>
     <el-table :data="tableData" style="width: 100%" max-height="calc(100vh - 225px)">
-
+      <el-table-column prop="id" label="ID"/>
       <el-table-column fixed="right" width="170">
         <template #header>
           <div style="display: flex;justify-content: center;align-items: center">
@@ -21,7 +20,7 @@
           </div>
         </template>
         <template #default="scope">
-          <el-button type="primary" @click.prevent="openForm(scope.row,'编辑',FormActionType.Edit)">
+          <el-button type="primary">
             编辑
           </el-button>
           <el-button type="danger" @click.prevent="deleteRow(scope.row)">
@@ -35,10 +34,13 @@
 </template>
 
 <script setup lang="ts">
-import { paginationList } from "@/api/demo/index.ts"
+import { paginationList,save } from "@/api/demo/index.ts"
 import usePagination from "@/compositionApi/pagination.ts"
 import useExtraAction from "./extraAction"
 
+paginationList("").then(r=>{
+  r.length
+})
 
 const {searchParams, tableData, paginationRef, setTableData, refreshTable,resetParams} =  usePagination()
 // const {tableFields} = useTableField()
