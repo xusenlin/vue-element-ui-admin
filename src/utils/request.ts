@@ -70,9 +70,10 @@ export class Request {
         }
     );
   }
+
   //未拦截请求，响应原封不动返回
   unhandledRequest<T>(config: RequestConfig): Promise<AxiosResponse<ResponseResult<T>>> {
-    return this.instance.request(config);
+    return this.instance.request({...config,closeInstance:true});
   }
   //做了拦截处理，自动报错，只返回关心的数据
   request<T>(config: RequestConfig): Promise<T> {
