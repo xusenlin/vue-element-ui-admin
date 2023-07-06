@@ -43,7 +43,6 @@ export class Request {
           return Promise.reject(err);
         }
     );
-
     this.instance.interceptors.response.use(
         (res: AxiosResponse) => {
           // 直接返回res，当然你也可以只返回res.data
@@ -72,6 +71,7 @@ export class Request {
   }
 
   //未拦截请求，响应原封不动返回
+
   unhandledRequest<T>(config: RequestConfig): Promise<AxiosResponse<ResponseResult<T>>> {
     return this.instance.request({...config,closeInstance:true});
   }
