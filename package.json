@@ -12,7 +12,7 @@
     "@element-plus/icons-vue": "^2.1.0",
     "@types/good-storage": "^1.1.0",
     "@vueuse/core": "^8.7.5",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "element-plus": "^2.3.6",
     "good-storage": "^1.1.1",
     "jsoneditor": "^9.9.0",
